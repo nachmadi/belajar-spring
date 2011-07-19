@@ -9,8 +9,20 @@
 	http://www.springframework.org/schema/tx 
 	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 	
+	<!-- 
+		<context:component-scan /> 
+		untuk memberitahu spring ada di package atau class mana anotasi tersebut
+		
+	    kalau manualnya kayak begini	    
+	    di codingnya di awal class diganti dengan @Repository "personDaoSpring"
+		<bean id="personDaoSpring" class="belajar.spring.jdbc.PersonDaoSpring">
+			<property name="dataSource" ref="dataSource"/>
+		</bean> 
+	    
+	-->	
 	<context:component-scan base-package="belajar.spring.jdbc" />
 	
+	<!-- untuk memberitahu spring letak file jdbc.properties -->
 	<context:property-placeholder location="classpath:jdbc.properties"/>
 	
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
@@ -25,16 +37,16 @@
 		<property name="maxWait" value="60"></property>
 	</bean>
 	
-	<!-- diganti dengan @Repository
-		<bean id="personDaoSpring" class="belajar.spring.jdbc.PersonDaoSpring">
-			<property name="dataSource" ref="dataSource"/>
-		</bean>
-		-->
 	
 	<bean id="transactionManager" 
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
+	
+	<!--
+		<tx:annotation-driven/> 
+		Spring akan memberikan transactional behavior ke kelas-kelas dengan annotation @Transactional.
+	-->
 	
 	<tx:annotation-driven/>
 
